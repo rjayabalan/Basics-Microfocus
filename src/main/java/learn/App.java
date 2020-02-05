@@ -41,6 +41,9 @@ public class App
                              new InputStreamReader((response.getEntity().getContent())));
     
             String output;
+
+            Parser parser = new Parser();
+
             System.out.println("Output from Server .... \n");
             // while ((output = br.readLine()) != null) {
             //     System.out.println(output);
@@ -49,49 +52,19 @@ public class App
             //Coverting complete buffered reader to string
             output = br.lines().collect(Collectors.joining());
 
-            byte jsonData[] = output.getBytes();
+            //byte jsonData[] = output.getBytes();
 
-            //Create ObjectMapper instance
-            ObjectMapper objMapper = new ObjectMapper();
-
-            //read JSON like DOM Parser
-            JsonNode rootnode = objMapper.readTree(output);
+            String url = parser.getRegisterVPPUserUrl(output.getBytes());            
             String sToken = "?sToken=eyJleHBEYXRlIjoiMjAyMC0wOS0xNVQyMzoxNToxNi0wNzAwIiwidG9rZW4iOiI5c3RtRTcvbWFuckxJZExqcU1DeXpjaXM2S1BxZ0p3blVha1JMditVN0swdlF1RTQvWDIwdkNYeXd2U3pwZXpZQk05d3B0M0Z0bVYrSExXYldlcVRWdUhmaWxzL050ajZ1OTgzdktPckFjbkNBOHlvN0VDV09IQ1o3bm1kSDFMK09zVzdJeThUVlZ5MkNWS0JXZGVOZEE9PSIsIm9yZ05hbWUiOiJOb3ZlbGwifQ==";
-            JsonNode tempNode = rootnode.path("clientConfigSrvUrl");
-            String vppClientConfig = tempNode.asText() + sToken;
-
-            tempNode = rootnode.path("contentMetadataLookupUrl");
-            String contentMetaData = tempNode.asText() + "?version=2&id=361309726&p=mdm-lockup&caller=MDM&platform=enterprisestore&cc=us&l=en";
-
-            tempNode = rootnode.path("getVPPAssetsSrvUrl");
-            String vppAssestSrv = tempNode.asText() + sToken;
-
-            tempNode = rootnode.path("manageVPPLicensesByAdamIdSrvUrl");
-            String manageVppLicenss = tempNode.asText() + sToken + "&associateSerialNumbers=serialNumber3&adamIdStr=281796108&pricingParam=STDQ";
-
-            tempNode = rootnode.path("registerUserSrvUrl");
-            String registerVPPUser = tempNode.asText() + sToken + "&clientUserIdStr=100002";
-
-            tempNode = rootnode.path("retireUserSrvUrl");
-            String retireVPPUser = tempNode.asText() + sToken + "&clientUserIdStr=100001";
+            String registerVPPUser = url + sToken + "&clientUserIdStr=100004";
            
-
-
             getRequest = new HttpGet(registerVPPUser);
             response = httpClient.execute(getRequest);
             br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             output = br.lines().collect(Collectors.joining());
 
-            //System.out.println(output);
-
-            jsonData = output.getBytes();
-            rootnode = objMapper.readTree(jsonData);
-
-            tempNode = rootnode.path("user");
-
-            output = tempNode.toString();
-
-            RegisterUser registerUser = objMapper.readValue(output,RegisterUser.class);
+            //Parsing the User Data alone from jsondata 
+            RegisterUser registerUser = parser.getUser(output.getBytes());
 
             System.out.println(registerUser.toString());
 

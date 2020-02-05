@@ -2,6 +2,16 @@ package learn;
 
 public class RegisterUser {
 
+
+	/*{
+		"clientUserIdStr": "100001",
+		"inviteCode": "04e19a5e80694490afaf8c12f7f968c7",
+		"status": "Registered",
+		"inviteUrl": "https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/associateVPPUserWithITSAccount?cc=us&inviteCode=04e19a5e80694490afaf8c12f7f968c7&mt=8",
+		"userId": 87558792
+	}
+	*/
+	
     private String clientUserIdStr;
     private String inviteCode;
     private String status;
