@@ -13,9 +13,8 @@ import java.util.stream.Collectors;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import com.fasterxml.jackson.databind.*;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 public class App 
 {
@@ -23,7 +22,10 @@ public class App
     {
         try {
 
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+            CloseableHttpClient httpClient = HttpClientBuilder.create()
+            .setUserAgent("MyAgent")
+            .setMaxConnPerRoute(4)
+            .build();
 
             String vppServiceConfig = "https://vpp.itunes.apple.com/WebObjects/MZFinance.woa/wa/VPPServiceConfigSrv";
 
@@ -73,7 +75,7 @@ public class App
             System.out.println("Result : " + pgconn.insertUserDetails(registerUser));
 
 
-            httpClient.getConnectionManager().shutdown();
+            httpClient.close();
     
           } catch (ClientProtocolException e) {
         
