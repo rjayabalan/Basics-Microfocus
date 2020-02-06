@@ -17,7 +17,7 @@ public class ParserTest{
 
         String expected = "https://vpp.itunes.apple.com/mdm/registerVPPUserSrv";
 
-        BufferedReader br = new BufferedReader(new FileReader("D:\\FirstEver Java Exercise\\learn\\src\\test\\java\\learn\\res\\jsonresponse1")); 
+        BufferedReader br = new BufferedReader(new FileReader("src\\test\\java\\learn\\res\\jsonresponse1")); 
 
         String outfile = br.lines().collect(Collectors.joining());
 
@@ -33,7 +33,7 @@ public class ParserTest{
         
         String expected = "RegisterUser [clientUserIdStr=100004, inviteCode=c09e96a19c4c438389cc1f52e3f26a86, inviteUrl=https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/associateVPPUserWithITSAccount?cc=us&inviteCode=c09e96a19c4c438389cc1f52e3f26a86&mt=8, status=Registered, userId=87646589]";
 
-        BufferedReader br = new BufferedReader(new FileReader("D:\\FirstEver Java Exercise\\learn\\src\\test\\java\\learn\\res\\jsonresponse2")); 
+        BufferedReader br = new BufferedReader(new FileReader("src\\test\\java\\learn\\res\\jsonresponse2")); 
 
         String outfile = br.lines().collect(Collectors.joining());
 
@@ -42,7 +42,7 @@ public class ParserTest{
         String actual = user.toString();
 
         br.close();
-        
+
         assertEquals(expected, actual);
 
 
