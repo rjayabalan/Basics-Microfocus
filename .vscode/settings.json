@@ -1,5 +1,8 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "maven.executable.path": "C:\\Program Files\\apache-maven-3.6.3-bin\\apache-maven-3.6.3\\bin\\mvn.cmd",
-    "maven.executable.preferMavenWrapper" :false
+    "maven.executable.preferMavenWrapper": false,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.formatOnSave": true
 }

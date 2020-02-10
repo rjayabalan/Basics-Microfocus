@@ -16,74 +16,66 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-public class App 
-{
-    public static void main( String[] args )
-    {
-        try {
+public class App {
+  public static void main(String[] args) {
+    try {
 
-            CloseableHttpClient httpClient = HttpClientBuilder.create()
-            .setUserAgent("MyAgent")
-            .setMaxConnPerRoute(4)
-            .build();
+      CloseableHttpClient httpClient = HttpClientBuilder.create().setUserAgent("MyAgent").setMaxConnPerRoute(4).build();
 
-            String vppServiceConfig = "https://vpp.itunes.apple.com/WebObjects/MZFinance.woa/wa/VPPServiceConfigSrv";
+      String vppServiceConfig = "https://vpp.itunes.apple.com/WebObjects/MZFinance.woa/wa/VPPServiceConfigSrv";
 
-            HttpGet getRequest = new HttpGet(vppServiceConfig);
-            //getRequest.addHeader("accept", "application/json");
-    
-            HttpResponse response = httpClient.execute(getRequest);
-    
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                   + response.getStatusLine().getStatusCode());
-            }
-    
-            BufferedReader br = new BufferedReader(
-                             new InputStreamReader((response.getEntity().getContent())));
-    
-            String output;
+      HttpGet getRequest = new HttpGet(vppServiceConfig);
+      // getRequest.addHeader("accept", "application/json");
 
-            Parser parser = new Parser();
+      HttpResponse response = httpClient.execute(getRequest);
 
-            System.out.println("Output from Server .... \n");
-            // while ((output = br.readLine()) != null) {
-            //     System.out.println(output);
-            // }
-            
-            //Coverting complete buffered reader to string
-            output = br.lines().collect(Collectors.joining());
+      if (response.getStatusLine().getStatusCode() != 200) {
+        throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
+      }
 
-            //byte jsonData[] = output.getBytes();
+      BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
 
-            String url = parser.getRegisterVPPUserUrl(output.getBytes());            
-            String sToken = "?sToken=eyJleHBEYXRlIjoiMjAyMC0wOS0xNVQyMzoxNToxNi0wNzAwIiwidG9rZW4iOiI5c3RtRTcvbWFuckxJZExqcU1DeXpjaXM2S1BxZ0p3blVha1JMditVN0swdlF1RTQvWDIwdkNYeXd2U3pwZXpZQk05d3B0M0Z0bVYrSExXYldlcVRWdUhmaWxzL050ajZ1OTgzdktPckFjbkNBOHlvN0VDV09IQ1o3bm1kSDFMK09zVzdJeThUVlZ5MkNWS0JXZGVOZEE9PSIsIm9yZ05hbWUiOiJOb3ZlbGwifQ==";
-            String registerVPPUser = url + sToken + "&clientUserIdStr=100004";
-           
-            getRequest = new HttpGet(registerVPPUser);
-            response = httpClient.execute(getRequest);
-            br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            output = br.lines().collect(Collectors.joining());
+      String output;
 
-            //Parsing the User Data alone from jsondata 
-            RegisterUser registerUser = parser.getUser(output.getBytes());
+      Parser parser = new Parser();
 
-            System.out.println(registerUser.toString());
+      System.out.println("Output from Server .... \n");
+      // while ((output = br.readLine()) != null) {
+      // System.out.println(output);
+      // }
 
-            PostgresConn pgconn = new PostgresConn();
+      // Coverting complete buffered reader to string
+      output = br.lines().collect(Collectors.joining());
 
-            System.out.println("Result : " + pgconn.insertUserDetails(registerUser));
+      // byte jsonData[] = output.getBytes();
 
+      String url = parser.getRegisterVPPUserUrl(output.getBytes());
+      String sToken = "?sToken=eyJleHBEYXRlIjoiMjAyMC0wOS0xNVQyMzoxNToxNi0wNzAwIiwidG9rZW4iOiI5c3RtRTcvbWFuckxJZExqcU1DeXpjaXM2S1BxZ0p3blVha1JMditVN0swdlF1RTQvWDIwdkNYeXd2U3pwZXpZQk05d3B0M0Z0bVYrSExXYldlcVRWdUhmaWxzL050ajZ1OTgzdktPckFjbkNBOHlvN0VDV09IQ1o3bm1kSDFMK09zVzdJeThUVlZ5MkNWS0JXZGVOZEE9PSIsIm9yZ05hbWUiOiJOb3ZlbGwifQ==";
+      String registerVPPUser = url + sToken + "&clientUserIdStr=100005";
 
-            httpClient.close();
-    
-          } catch (ClientProtocolException e) {
-        
-            e.printStackTrace();
-    
-          } catch (IOException e) {
-        
-            e.printStackTrace();
-          }
-        }
+      getRequest = new HttpGet(registerVPPUser);
+      response = httpClient.execute(getRequest);
+      br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+      output = br.lines().collect(Collectors.joining());
+
+      // Parsing the User Data alone from jsondata
+      RegisterUser registerUser = parser.getUser(output.getBytes());
+
+      System.out.println(registerUser.toString());
+
+      PostgresConn pgconn = new PostgresConn();
+
+      System.out.println("Result : " + pgconn.insertUserDetails(registerUser));
+
+      httpClient.close();
+
+    } catch (ClientProtocolException e) {
+
+      e.printStackTrace();
+
+    } catch (IOException e) {
+
+      e.printStackTrace();
+    }
+  }
 }
