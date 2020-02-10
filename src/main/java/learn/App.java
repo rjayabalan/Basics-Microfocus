@@ -65,7 +65,14 @@ public class App {
 
       PostgresConn pgconn = new PostgresConn();
 
-      System.out.println("Result : " + pgconn.insertUserDetails(registerUser));
+      /* Insert a new Record */
+      // System.out.println("Result : " + pgconn.insertUserDetails(registerUser));
+
+      /* Get the count of number of records */
+      // System.out.println("Count of Registered Users : " + pgconn.getUserCount());
+
+      /* Show the data in the table */
+      pgconn.getUsers();
 
       httpClient.close();
 
