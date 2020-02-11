@@ -50,7 +50,7 @@ public class App {
       // byte jsonData[] = output.getBytes();
 
       String url = parser.getRegisterVPPUserUrl(output.getBytes());
-      String sToken = "?sToken=eyJleHBEYXRlIjoiMjAyMC0wOS0xNVQyMzoxNToxNi0wNzAwIiwidG9rZW4iOiI5c3RtRTcvbWFuckxJZExqcU1DeXpjaXM2S1BxZ0p3blVha1JMditVN0swdlF1RTQvWDIwdkNYeXd2U3pwZXpZQk05d3B0M0Z0bVYrSExXYldlcVRWdUhmaWxzL050ajZ1OTgzdktPckFjbkNBOHlvN0VDV09IQ1o3bm1kSDFMK09zVzdJeThUVlZ5MkNWS0JXZGVOZEE9PSIsIm9yZ05hbWUiOiJOb3ZlbGwifQ==";
+      String sToken = "*present your sktoken here*";
       String registerVPPUser = url + sToken + "&clientUserIdStr=100005";
 
       getRequest = new HttpGet(registerVPPUser);
