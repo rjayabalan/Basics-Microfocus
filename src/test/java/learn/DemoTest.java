@@ -9,7 +9,7 @@ import org.junit.Test;
 public class DemoTest {
 
     @Test
-    public void testLinkedList(){
+    public void testLinkedList() {
 
         LinkedList<String> ll = new LinkedList<>();
 
@@ -21,7 +21,7 @@ public class DemoTest {
     }
 
     @Test
-    public void testStack(){
+    public void testStack() {
 
         Stack<String> stack = new Stack<>();
 
@@ -33,10 +33,10 @@ public class DemoTest {
     }
 
     @Test
-    public void testArray(){
+    public void testArray() {
 
         int arr[] = new int[7];
-    
+
         assertEquals(7, arr.length);
 
     }

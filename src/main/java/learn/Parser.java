@@ -6,16 +6,16 @@ import com.fasterxml.jackson.databind.*;
 
 public class Parser {
 
-    //Create ObjectMapper instance
+    // Create ObjectMapper instance
     private ObjectMapper objMapper = new ObjectMapper();
 
     public String getRegisterVPPUserUrl(byte[] jsonData) throws IOException {
 
         JsonNode rootnode = objMapper.readTree(jsonData);
 
-        //read JSON like DOM Parser
+        // read JSON like DOM Parser
         JsonNode tempnode = rootnode.path("registerUserSrvUrl");
-        
+
         return tempnode.asText();
 
     }
@@ -23,8 +23,8 @@ public class Parser {
     public RegisterUser getUser(byte[] jsonData) throws IOException {
 
         JsonNode rootnode = objMapper.readTree(jsonData);
-        
-        //read JSON like DOM Parser
+
+        // read JSON like DOM Parser
         JsonNode tempnode = rootnode.path("user");
 
         RegisterUser registerUser = objMapper.readValue(tempnode.toString(), RegisterUser.class);

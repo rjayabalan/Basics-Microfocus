@@ -73,7 +73,6 @@ public class PostgresConn {
     public void getUsers() {
 
         String query = "Select * from \"registerUser\"";
-        int count = 0;
 
         try (Connection connect = connect();
                 Statement stmt = connect.createStatement();
